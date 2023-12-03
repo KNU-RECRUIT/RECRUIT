@@ -106,9 +106,155 @@ out.println("Error: " + e.getMessage());
 %>
 <br />2. 가장 먼저 글쓰기한 사용자 및 가장 최근에 글쓰기한 사용자 검색
 <br />
-<Button>검색하기</Button>
-<br />3. 가장 먼저 수정된 글 및 가장 최근에 수정된 글 검색
+가장 먼저 글쓰기한 사용자
+<%
+String SQLT="SELECT NAME, GENDER, EMAIL, ID FROM CUSTOMER_INFO WHERE ID IN (SELECT AUTHOR_ID FROM USER_POST_INFO WHERE START_DATE = (SELECT MIN(START_DATE) FROM USER_POST_INFO)) ORDER BY NAME ASC, ID ASC, GENDER DESC";
+try {
+stmt = conn.createStatement();
+rs = stmt.executeQuery(SQLT);
+ResultSetMetaData rsmd = rs.getMetaData();
+out.println("<table border=\"1\">");
+int cnt = rsmd.getColumnCount();
+for (int i=1;i<=cnt;i++)
+{
+	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+}
+while (rs.next()) {
+    String CNAME = rs.getString(1);
+    String Gender = rs.getString(2);
+    String Email = rs.getString(3);
+    String EID = rs.getString(4);
+
+	out.println("<tr>");
+    out.println("<td>"+CNAME+"</td>");
+    out.println("<td>"+Gender+"</td>");
+    out.println("<td>"+Email+"</td>");
+    out.println("<td>"+EID+"</td>");
+
+    out.println("</tr>");
+    
+}
+out.println("</table>");
+} catch (SQLException e) {
+out.println("Error: " + e.getMessage());
+}
+
+%>
 <br />
-<Button>검색하기</Button>
+가장 나중에 글쓰기한 사용자
+<br />
+<%
+String SQLTMIN="SELECT NAME, GENDER, EMAIL, ID FROM CUSTOMER_INFO WHERE ID IN (SELECT AUTHOR_ID FROM USER_POST_INFO WHERE START_DATE = (SELECT MAX(START_DATE) FROM USER_POST_INFO)) ORDER BY NAME ASC, ID ASC, GENDER DESC";
+try {
+stmt = conn.createStatement();
+rs = stmt.executeQuery(SQLTMIN);
+ResultSetMetaData rsmd = rs.getMetaData();
+out.println("<table border=\"1\">");
+int cnt = rsmd.getColumnCount();
+for (int i=1;i<=cnt;i++)
+{
+	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+}
+while (rs.next()) {
+    String CNAME = rs.getString(1);
+    String Gender = rs.getString(2);
+    String Email = rs.getString(3);
+    String EID = rs.getString(4);
+
+	out.println("<tr>");
+    out.println("<td>"+CNAME+"</td>");
+    out.println("<td>"+Gender+"</td>");
+    out.println("<td>"+Email+"</td>");
+    out.println("<td>"+EID+"</td>");
+
+    out.println("</tr>");
+    
+}
+out.println("</table>");
+} catch (SQLException e) {
+out.println("Error: " + e.getMessage());
+}
+
+%>
+
+
+
+
+
+<br />사용자 정보가 있는 글 중 가장 먼저 수정된 글 및 가장 최근에 수정된 공고의 상태, ID및 수정일자 검색
+<br />
+
+가장 먼저 수정된 글
+<br />
+<%
+String SQLK="SELECT STATUS, POST_ID, LASTLY_UPDATED FROM (SELECT U.STATUS, P.POST_ID, P.LASTLY_UPDATED FROM USER_POST_INFO U JOIN POST_INFO P ON U.POST_ID = P.POST_ID) WHERE LASTLY_UPDATED IN (SELECT MIN(LASTLY_UPDATED) FROM POST_INFO)";
+
+try {
+stmt = conn.createStatement();
+rs = stmt.executeQuery(SQLK);
+ResultSetMetaData rsmd = rs.getMetaData();
+out.println("<table border=\"1\">");
+int cnt = rsmd.getColumnCount();
+for (int i=1;i<=cnt;i++)
+{
+	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+}
+while (rs.next()) {
+    String Status = rs.getString(1);
+    String Post_ID = rs.getString(2);
+    String LUP = rs.getString(3);
+
+	out.println("<tr>");
+    out.println("<td>"+Status+"</td>");
+    out.println("<td>"+Post_ID+"</td>");
+    out.println("<td>"+LUP+"</td>");
+
+    out.println("</tr>");
+    
+}
+out.println("</table>");
+} catch (SQLException e) {
+out.println("Error: " + e.getMessage());
+}
+
+%>
+<br />
+가장 최근에 수정된 글
+<br />
+<%
+String SQLKMAX="SELECT STATUS, POST_ID, LASTLY_UPDATED FROM (SELECT U.STATUS, P.POST_ID, P.LASTLY_UPDATED FROM USER_POST_INFO U JOIN POST_INFO P ON U.POST_ID = P.POST_ID) WHERE LASTLY_UPDATED IN (SELECT MAX(LASTLY_UPDATED) FROM POST_INFO)";
+
+try {
+stmt = conn.createStatement();
+rs = stmt.executeQuery(SQLKMAX);
+ResultSetMetaData rsmd = rs.getMetaData();
+out.println("<table border=\"1\">");
+int cnt = rsmd.getColumnCount();
+for (int i=1;i<=cnt;i++)
+{
+	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+}
+while (rs.next()) {
+    String Status = rs.getString(1);
+    String Post_ID = rs.getString(2);
+    String LUP = rs.getString(3);
+
+	out.println("<tr>");
+    out.println("<td>"+Status+"</td>");
+    out.println("<td>"+Post_ID+"</td>");
+    out.println("<td>"+LUP+"</td>");
+
+    out.println("</tr>");
+    
+}
+out.println("</table>");
+} catch (SQLException e) {
+out.println("Error: " + e.getMessage());
+}
+
+%>
+
+
+
 </body>
 </html>
