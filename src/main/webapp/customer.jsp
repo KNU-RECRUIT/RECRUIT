@@ -8,10 +8,14 @@
 </head>
 <body>
 고객 관리
-
-
-			System.out.println("1. Search the user who posted the most and the least.");
-            System.out.println("2. Search the earliest posted and latest posted user.");
-            System.out.println("3. Search the earliest updated post and latest updated post.");
+<br />1. 가장 많이 글쓰기한 사용자 및 가장 적게 글쓰기한 사용자 검색
+<br />
+<Button>검색하기</Button>
+<br />2. 가장 먼저 글쓰기한 사용자 및 가장 최근에 글쓰기한 사용자 검색
+<br />
+<Button>검색하기</Button>
+<br />3. 가장 먼저 수정된 글 및 가장 최근에 수정된 글 검색
+<br />
+<Button>검색하기</Button>
 </body>
 </html>
