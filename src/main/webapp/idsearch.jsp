@@ -36,36 +36,18 @@
     String sql = ""; // an SQL statement
     
     %>
-
-
-	직원의 ID로 해당 직원이 쓴 글 검색
-	<br />
-	<form action="idsearch.jsp" method="post" accept-charset="utf-8">
-        <label for="mid">직원의 	ID</label>
-        <input type="text" id="mid" name="mid"><br><br>
-        <input type="submit" value="Submit">
-    </form>
-    <br />
-    공지를 관리할 수 있는 부서 관리자급 직원 검색
-    이름으로 검색
-    <form action="namesearch.jsp" method="post" accept-charset="utf-8">
-        <label for="mdep">이름</label>
-        <input type="text" id="mname" name="mname"><br><br>
-        <input type="submit" value="Submit">
-    </form>
-    직원 부서로 검색
-    <form action="depsearch.jsp" method="post" accept-charset="utf-8">
-        <label for="mdep">부서</label>
-        <input type="text" id="mdep" name="mdep"><br><br>
-        <input type="submit" value="Submit">
-    </form>
-  	전체 검색 결과
-  	<br />
-  	<%
-    String SQLW = "SELECT DISTINCT E.NAME, D.CONTACT, D.DEPARTMENT_ID FROM EMPLOYEE_INFO E, DEPARTMENT_INFO D, ANNOUNCEMENT_INFO A WHERE E.ID = D.HEAD_ID AND A.MANAGER_ID = E.ID";
-try {
+    <%
+    String mid = request.getParameter("mid");
+    
+    
+    String SQL2 = "SELECT * "
+            + "FROM POST_INFO "
+            + "WHERE POST_ID IN "
+            + "(SELECT POST_ID "
+            + "FROM ANNOUNCEMENT_INFO "
+            + "WHERE MANAGER_ID = '" + mid + "') AND TYPE = 'A'";try {
 stmt = conn.createStatement();
-rs = stmt.executeQuery(SQLW);
+rs = stmt.executeQuery(SQL2);
 ResultSetMetaData rsmd = rs.getMetaData();
 out.println("<table border=\"1\">");
 int cnt = rsmd.getColumnCount();
@@ -74,15 +56,17 @@ for (int i=1;i<=cnt;i++)
 	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
 }
 while (rs.next()) {
-    String Name = rs.getString(1);
-    String Phone = rs.getString(2);
-    String Department = rs.getString(3);
-
+    String postID = rs.getString(1);
+    Date postedDate = rs.getDate(2);
+    Date updateDate = rs.getDate(3);
+    String Type = rs.getString(4);
+    int views = rs.getInt(4);
 	out.println("<tr>");
-    out.println("<td>"+Name+"</td>");
-    out.println("<td>"+Phone+"</td>");
-    out.println("<td>"+Department+"</td>");
-
+    out.println("<td>"+postID+"</td>");
+    out.println("<td>"+postedDate+"</td>");
+    out.println("<td>"+updateDate+"</td>");
+    out.println("<td>"+views+"</td>");
+	out.println("<td>"+Type+"</td>");
     out.println("</tr>");
     
 }
@@ -92,8 +76,5 @@ out.println("Error: " + e.getMessage());
 }
 
 %>
-  	
-
-
 </body>
 </html>
