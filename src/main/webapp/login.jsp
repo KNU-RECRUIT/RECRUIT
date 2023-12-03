@@ -45,7 +45,7 @@
         }
         else {
             departmentId = rs.getString(4);
-            out.println("Welcome " + name);
+            out.println(name+"님 환영합니다!");
 			
             sql = "SELECT NAME FROM DEPARTMENT_INFO " + "WHERE DEPARTMENT_ID = '" + departmentId + "'";
             stmt = conn.createStatement();
@@ -59,12 +59,17 @@
             }
             else {
                 departmentName = rs.getString(1);
-                out.println("("+departmentName+" 부서)");
+                out.println("("+departmentName+" 부서)<br />");
+                out.println("어떻게 도와드릴까요?<br />");
+                out.println("<a href='customer.jsp'> 1.고객 관리<a /><br />");
+                out.println("<a href='announcement.jsp'> 2.공지글 관리<a /><br />");
+                out.println("<a href='post.jsp'> 3.고객 작성글 관리<a /><br />");
+                out.println("");
             }
+            
         }
     } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
-        System.exit(1);
+        out.println("Error: " + e.getMessage());
     }
 	
 	
