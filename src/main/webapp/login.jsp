@@ -10,12 +10,17 @@
 </head>
 <body>
 	<%
+	
 	request.setCharacterEncoding("UTF-8");
+	
+    String DBuser = request.getParameter("DBuser");
+    String DBpass = request.getParameter("DBpass");
+    
 	String serverIP = "localhost";
 	String strSID = "xe";
 	String portNum = "1521";
-	String user = "university";
-	String pass = "comp322";
+	String user = DBuser;
+	String pass = DBpass;
 	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
 	
 
@@ -26,14 +31,26 @@
 	conn = DriverManager.getConnection(url, user, pass);
 	}
 	catch(SQLException e){
-		out.println("연결 실패");
-		out.println("네트워크 연결 상태 또는 Driver 상태를 점검하여 주십시오. ");
+		out.println("<script>");
+		out.println("alert('데이터베이스 연결에 실패하였습니다. 네트워크 상태 또는 JDBC Driver 상태, 데이터베이스의 사용자 ID및 비밀번를 점검하여 주십시오.')");
+		out.println("location.href='main.jsp';");
+		out.println("</script>");
 	}
     Statement stmt = null;	// Statement object
     ResultSet rs = null;    // Resultset object
     String departmentId = null;
     String departmentName = null;
     String sql = ""; // an SQL statement
+    
+    if(conn==null)
+    {
+    	out.println("<script>");
+    	out.println("alert('데이터베이스 사용자 ID 또는 비밀번호를 확인하여 주시기 바랍니다.')");
+		out.println("location.href='main.jsp';");
+    	out.println("</script>");
+    }
+    else
+    {
     String id = request.getParameter("id");
     String name = request.getParameter("name");
     try {
@@ -41,7 +58,11 @@
         stmt = conn.createStatement();
         rs = stmt.executeQuery(sql);
         if (!rs.next()) {
-            out.println("인증에 실패하였습니다. 다시 시도하여 주십시오.");
+        	out.println("<script>");
+            out.println("alert('인증에 실패하였습니다. 다시 시도하여 주십시오.')");
+            out.println("location.href='main.jsp';");
+            out.println("</script>");
+            
         }
         else {
             departmentId = rs.getString(4);
@@ -71,7 +92,7 @@
     } catch (SQLException e) {
         out.println("Error: " + e.getMessage());
     }
-	
+    }
 	
 %>
 </body>

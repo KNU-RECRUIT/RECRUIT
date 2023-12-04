@@ -24,28 +24,7 @@
     }
 
 %>
-<%
-	String serverIP = "localhost";
-	String portNum = "1521";
-	String user = "university";
-	String pass = "comp322";
-	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
-	
 
-	Connection conn = null;
-	PreparedStatement pstmt;
-	ResultSet rs;
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	try{
-	conn = DriverManager.getConnection(url, user, pass);
-	}
-	catch(SQLException e){
-		out.println("연결 실패");
-		out.println("네트워크 연결 상태 또는 Driver 상태를 점검하여 주십시오. ");
-	}
-	
-	
-%>
 
 <%
     if (request.getMethod().equalsIgnoreCase("post")) {
@@ -62,14 +41,14 @@
 인증을 위해 직원 ID와 성명을 입력하여 주십시오.
 
     <form action="login.jsp" method="post" accept-charset="utf-8">
-<!--     	<label for="DBuser">ID:</label>
+     	<label for="DBuser">데이터베이스 사용자 ID:</label>
     
-    	<input type="text" name="DBuser">
+    	<input type="text" name="DBuser"><br><br>
     	
-    	<label for="DBpass">ID:</label>
+    	<label for="DBpass">데이터베이스 비밀번호</label>
     	
-    	<input type="text" name="DBpass">
-     -->
+    	<input type="password" name="DBpass"><br><br>
+     
     
         <label for="id">ID:</label>
         <input type="text" id="id" name="id"><br><br>
