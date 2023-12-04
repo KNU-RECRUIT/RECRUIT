@@ -93,7 +93,57 @@ out.println("Error: " + e.getMessage());
 
 %>
   	
+<br />
+내가 쓴 글 삭제
+<br />
+	<form action="announcement.jsp" method="post" accept-charset="utf-8">
+        <label for="pd_id">삭제하려는 글의 ID 입력</label>
+        <input type="text" id="pd_id" name="pd_id"><br><br>
+        <label for="my_id">삭제 확인을 위해 나의 ID 입력 </label>
+        <input type="text" id="my_id" name="my_id"><br><br>
+        
+        <input type="submit" value="Submit">
+        <input type="hidden" name="customer_form_ident" value="post_delete_form">
+    </form>
+       
+<%
+if (request.getMethod().equalsIgnoreCase("post")) {
+    String formIdentifier = request.getParameter("customer_form_ident");
+
+    // 폼 식별자에 따라 다른 처리
+    if (formIdentifier != null) {
+        if (formIdentifier.equals("post_delete_form")) {
+        	
+            String Delete_ID = request.getParameter("del_id");
+			String MyID = request.getParameter("my_id");
+
+            String SQL4 = "DELETE FROM ANNOUNCEMENT_INFO WHERE MANAGER_ID='"+MyID+"' AND POST_ID='"+Delete_ID+"'";
 
 
+            try {
+                stmt = conn.createStatement();
+                int cnt = stmt.executeUpdate(SQL4);
+                if(cnt>=1)
+                {
+                    String dsql = "DELETE FROM POST_INFO WHERE POST_ID='"+Delete_ID+"'";
+                    String dsql2 = "DELETE FROM USER_POST_INFO WHERE POST_ID='"+Delete_ID+"'";
+                    stmt.executeUpdate(dsql);
+                    stmt.executeUpdate(dsql2);
+                }
+
+                out.println("<script>alert('삭제가 완료되었습니다. ');</script>");
+            } catch (SQLException e) {
+            	out.println("<script>alert('삭제에 실패하였습니다. ');</script>");
+                out.println("Error: " + e.getMessage());
+            }
+
+        	
+        	
+        
+        }
+    }
+}
+	
+%>
 </body>
 </html>

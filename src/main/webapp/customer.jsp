@@ -173,7 +173,7 @@ if (request.getMethod().equalsIgnoreCase("post")) {
                 rs = stmt.executeQuery(Delete_sql);
                 out.println("<script>");
 
-                out.println("alert('고객 정보 삭제에 성공하였습니다.');");
+                out.println("alert('고객 정보 삭제에 성공하였습니다. ');");
 
                 out.println("</script>");
                 out.println("고객 정보 삭제 성공");
@@ -200,6 +200,8 @@ if (request.getMethod().equalsIgnoreCase("post")) {
 
 
 %>
+
+<br />
 
 </body>
 </html>
