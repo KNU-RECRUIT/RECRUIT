@@ -283,7 +283,10 @@ out.println("Error: " + e.getMessage());
 
 %>
 
-
+<br />
+	<form action="logout.jsp" method="post" accept-charset="utf-8">
+		<input type="submit" value="로그아웃">
+	</form>
 
 </body>
 </html>
