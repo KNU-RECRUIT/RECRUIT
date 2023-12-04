@@ -147,7 +147,11 @@ if (request.getMethod().equalsIgnoreCase("post")) {
 			String MyID = request.getParameter("my_id");
 
             String SQL4 = "DELETE FROM ANNOUNCEMENT_INFO WHERE MANAGER_ID='"+MyID+"' AND POST_ID='"+Delete_ID+"'";
-
+            String login_user_id = session.getAttribute("recruit_id").toString();
+			if(login_user_id.equals(MyID))
+			{
+				
+			
 
             try {
                 stmt = conn.createStatement();
@@ -166,7 +170,13 @@ if (request.getMethod().equalsIgnoreCase("post")) {
                 out.println("Error: " + e.getMessage());
             }
 
-        	
+			}
+			else
+			{
+				out.println("<script>");
+				out.println("alert('ID가 일치하지 않습니다. 내가 작성한 글만 삭제할 수 있습니다.')");
+				out.println("</script>");
+			}
         	
         
         }
