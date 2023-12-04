@@ -151,7 +151,7 @@ if (request.getMethod().equalsIgnoreCase("post")) {
 <br />
 	<form action="customer.jsp" method="post" accept-charset="utf-8">
         <label for="del_id">ID: </label>
-        <input type="text" id=del_id" name="del_id"><br><br>
+        <input type="text" id="del_id" name="del_id"><br><br>
 		<input type="hidden" name="formIdentifier" value="d_form">
 		<input type="submit" value="Submit">
 	</form>
@@ -171,9 +171,24 @@ if (request.getMethod().equalsIgnoreCase("post")) {
             try {
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery(Delete_sql);
+                out.println("<script>");
+
+                out.println("alert('고객 정보 삭제에 성공하였습니다.');");
+
+                out.println("</script>");
                 out.println("고객 정보 삭제 성공");
             } catch (SQLException e) {
-                out.println("고객 정보 삭제에 실패했습니다.");
+            /* 	out.println(Delete_sql);
+            	out.println(e); */
+            	String ErrorMessage = e.toString();
+                out.println("<script>");
+				
+                out.println("alert('고객 정보 삭제에 실패하였습니다. 무결성 제약 조건을 확인하여 주십시오. (글을 작성한 회원의 경우 글을 삭제한 후 계정을 삭제할 수 있습니다.)');");
+             
+                out.println("</script>");
+               	
+                out.println("고객 정보 삭제에 실패했습니다.<br />");
+                out.println("Error Code: "+e.toString());
             }
         	
         	
