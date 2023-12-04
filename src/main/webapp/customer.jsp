@@ -64,6 +64,30 @@
         out.println("OS 정보가 올바르지 않거나 인식되지 않습니다. UNIX/Linux/macOS/Windows외의 OS 사용 시 본 사이트와 호환되지 않을 수 있습니다.<br />");
     }
 
+    	try
+    	{
+        String login_user_id = session.getAttribute("recruit_id").toString();
+    	String login_user_name = session.getAttribute("recruit_name").toString();
+    	}
+    	catch(NullPointerException e)
+    	{
+    		out.println("<script>");
+    		out.println("alert('로그인 정보(권한)이 없습니다. 정상적인 경로로 다시 접속하여 주시기 바랍니다.');");
+    		out.println("location.href='main.jsp';");
+    		out.println("</script>");
+
+    	}
+    
+   
+/* 	if(login_user_id==null || login_user_name==null || login_user_id.equals("") || login_user_name.equals(""))
+	{
+
+		
+	} */
+
+/* 	 */
+    
+    
 %>
 <%
 //폼 데이터가 전송되었을 때 처리
@@ -217,6 +241,9 @@ if (request.getMethod().equalsIgnoreCase("post")) {
 %>
 
 <br />
-
+로그아웃
+	<form action="logout.jsp" method="post" accept-charset="utf-8">
+		<input type="submit" value="로그아웃">
+	</form>
 </body>
 </html>

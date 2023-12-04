@@ -82,6 +82,12 @@
         else {
             departmentId = rs.getString(4);
             out.println(name+"님 환영합니다!");
+            String sessionName1 = "recruit_id";
+            String sessionToken1 = id;
+            String sessionName2 = "recruit_name";
+            String sessionToken2 = name;
+			session.setAttribute(sessionName1, sessionToken1);
+			session.setAttribute(sessionName2, sessionToken2);
 			
             sql = "SELECT NAME FROM DEPARTMENT_INFO " + "WHERE DEPARTMENT_ID = '" + departmentId + "'";
             stmt = conn.createStatement();
