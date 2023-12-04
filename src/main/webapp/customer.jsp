@@ -210,6 +210,7 @@ if (request.getMethod().equalsIgnoreCase("post")) {
             try {
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery(Delete_sql);
+                conn.commit();
                 out.println("<script>");
 
                 out.println("alert('고객 정보 삭제에 성공하였습니다. ');");

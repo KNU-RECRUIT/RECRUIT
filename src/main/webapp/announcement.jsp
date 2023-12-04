@@ -163,7 +163,7 @@ if (request.getMethod().equalsIgnoreCase("post")) {
                     stmt.executeUpdate(dsql);
                     stmt.executeUpdate(dsql2);
                 }
-
+				conn.commit();
                 out.println("<script>alert('삭제가 완료되었습니다. ');</script>");
             } catch (SQLException e) {
             	out.println("<script>alert('삭제에 실패하였습니다. ');</script>");
