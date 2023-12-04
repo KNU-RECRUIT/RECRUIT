@@ -23,6 +23,23 @@
     }
 
 %>
+<%
+
+try
+{
+String login_user_id = session.getAttribute("recruit_id").toString();
+String login_user_name = session.getAttribute("recruit_name").toString();
+}
+catch(NullPointerException e)
+{
+	out.println("<script>");
+	out.println("alert('로그인 정보(권한)이 없습니다. 정상적인 경로로 다시 접속하여 주시기 바랍니다.');");
+	out.println("location.href='main.jsp';");
+	out.println("</script>");
+
+}
+
+%>
 	<%
 	request.setCharacterEncoding("UTF-8");
 	String serverIP = "localhost";
