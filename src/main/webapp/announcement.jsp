@@ -9,10 +9,23 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%
+	String strSID = "";
+    String OS = System.getProperty("os.name").toLowerCase();
+    if (OS.contains("win")) {
+    	strSID = "orcl";
+    } else if (OS.contains("mac") || OS.contains("nix") || OS.contains("nux") || OS.contains("sunos")) {
+    	
+    	strSID = "xe";
+
+    } else {
+        out.println("OS 정보가 올바르지 않거나 인식되지 않습니다. UNIX/Linux/macOS/Windows외의 OS 사용 시 본 사이트와 호환되지 않을 수 있습니다.<br />");
+    }
+
+%>
 	<%
 	request.setCharacterEncoding("UTF-8");
 	String serverIP = "localhost";
-	String strSID = "xe";
 	String portNum = "1521";
 	String user = "university";
 	String pass = "comp322";
