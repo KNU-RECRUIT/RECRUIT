@@ -9,13 +9,18 @@
 <html>
 <head>
 <style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&display=swap');
 body {
     background-color: lightblue;
+        color: #FFFFFF;
 }
 
 h1 {
+	position: relative;
     color: white;
-    text-align: center;
+    font-family: 'Black Han Sans', sans-serif;
+    left: 20%;
 }
 
 p {
@@ -76,44 +81,103 @@ table th {
   background-color: #04AA6D;
   color: white;
 }
+
+.customer-sc .input-box {
+  position: relative;
+  width: 60%;
+  left: 20%;
+}
+
+.customer-sc .input-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+.customer-sc .input-box label {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.customer-sc .input-box input:focus ~ label,
+.customer-sc .input-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+
+::placeholder {
+	color: #ffffff
+}
+
 </style>
 <meta charset="UTF-8">
 <title>RECRUIT: KNU</title>
 </head>
 <body>
-고객 관리 화면
+
 <br />
+<h1>
 고객 추가
+</h1>
 <br />
+<div class="customer-sc">
     <form action="addcustomer.jsp" method="post" accept-charset="utf-8">
-        <label for="fname">성: </label>
-        <input type="text" id=fname" name="fname"><br><br>
+    
+    
+        <div class="input-box">
+        <input type="text" id=fname" name="fname" placeholder="성"><br><br>
+        </div>
         
-        <label for="lname">이름:</label>
-        <input type="text" id="lname" name="lname"><br><br>
+      
+        <div class="input-box">
+        <input type="text" id="lname" name="lname" placeholder="이름"><br><br>
+        </div>
+                <div class="input-box">
         
-        <label for="gender">성별:</label>
-        <input type="text" id="gender" name="gender"><br><br>
+        <input type="text" id="gender" name="gender" placeholder="성별"><br><br>
+       </div>
+               <div class="input-box">
+       
+        <input type="text" id="email" name="email" placeholder="Email"><br><br>
+        </div>
+                <div class="input-box">
         
-        <label for="email">이메일 주소:</label>
-        <input type="text" id="email" name="email"><br><br>
+        <input type="text" id="id" name="id" placeholder="ID"><br><br>
+        </div>
+                <div class="input-box">
         
-        <label for="id">ID:</label>
-        <input type="text" id="id" name="id"><br><br>
+        <input type="text" id="password" name="password" placeholder="비밀번호"><br><br>
+        </div>
+                <div class="input-box">
         
-        <label for="password">비밀번호:</label>
-        <input type="text" id="password" name="password"><br><br>
+        <input type="text" id="phone" name="phone" placeholder="전화번호"><br><br>
+        </div>
+                <div class="input-box">
         
-        <label for="phone">전화번호:</label>
-        <input type="text" id="phone" name="phone"><br><br>
-        
-        <label for="birth">생년월일:</label>
-        <input type="text" id="birth" name="birth"><br><br>
+        <input type="text" id="birth" name="birth" placeholder="생년월일(YYYY-MM-DD로 입력하여 주세요)"><br><br>
+        </div>
         
         <input type="submit" value="Submit">
+        
     </form>
+    </div>
 <br />
-고객 정보 검색(ID를 입력하여 주십시오.)
+<h1>
+고객 정보 검색 (ID로 검색하기)
+</h1>
 <br />
 	<form action="customer.jsp" method="post" accept-charset="utf-8">
         <label for="c_id">ID: </label>
@@ -258,8 +322,9 @@ if (request.getMethod().equalsIgnoreCase("post")) {
 %>
 	
 <br />
-고객 정보 삭제(ID를 입력하여 주십시오.)
-<br />
+<h1>
+고객 정보 삭제 (ID로 삭제하기)
+</h1><br />
 <br />
 	<form action="customer.jsp" method="post" accept-charset="utf-8">
         <label for="del_id">ID: </label>
@@ -283,7 +348,6 @@ if (request.getMethod().equalsIgnoreCase("post")) {
             try {
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery(Delete_sql);
-                conn.commit();
                 out.println("<script>");
 
                 out.println("alert('고객 정보 삭제에 성공하였습니다. ');");
@@ -315,7 +379,7 @@ if (request.getMethod().equalsIgnoreCase("post")) {
 %>
 
 <br />
-로그아웃
+
 	<form action="logout.jsp" method="post" accept-charset="utf-8">
 		<input type="submit" value="로그아웃">
 	</form>

@@ -170,12 +170,12 @@ input[type=submit] {
     	<input type="password" name="DBpass"><br><br>
      </div>
     
-        <label for="id">ID:</label>
+        <label for="id">직원 ID</label>
              	<div class="user-box">
         
         <input type="text" id="id" name="id"><br><br>
         </div>
-        <label for="name">이름:</label>
+        <label for="name">이름</label>
              	<div class="user-box">
         
         <input type="text" id="name" name="name"><br><br>

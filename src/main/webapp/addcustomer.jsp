@@ -94,10 +94,16 @@ catch(NullPointerException e)
 	        try {
 	            stmt = conn.createStatement();
 	            rs = stmt.executeQuery(sqlcsi);
-	           conn.commit();
+	           
+	           
+	       	out.println("<script>");
+	    	out.println("alert('회원이 추가되었습니다.');");
+	    	out.println("location.href='customer.jsp';");
+	    	out.println("</script>");
 	        } catch (SQLException e) {
 	        	out.println(sqlcsi);
 	            out.println("고객 정보 삽입에 실패했습니다.");
+	            System.out.println(e);
 	        }
 
 %>
