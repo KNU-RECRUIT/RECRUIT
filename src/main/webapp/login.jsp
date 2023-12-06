@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*" %>
@@ -10,7 +12,7 @@
 <head>
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 
 
@@ -139,12 +141,12 @@ h1 {
   transition: all 0.4s ease 0s;
 }
 
-.one h1 {
+.title h1 {
   text-align: center;
   text-transform: uppercase;
   padding-bottom: 5px;
 }
-.one h1:before {
+.title h1:before {
   width: 28px;
   height: 5px;
   display: block;
@@ -155,7 +157,7 @@ h1 {
   margin-left: -14px;
   background-color: #b80000;
 }
-.one h1:after {
+.title h1:after {
   width: 100px;
   height: 1px;
   display: block;
@@ -220,7 +222,7 @@ h1 {
     String departmentName = null;
     String sql = ""; // an SQL statement
     
-    out.println("<div class=\"one\"><h1>RECRUIT: KNU</h1></div>");
+    out.println("<div class=\"title\"><h1>RECRUIT: KNU</h1></div>");
     
     if(conn==null)
     {
