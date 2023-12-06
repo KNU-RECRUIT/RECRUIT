@@ -9,14 +9,26 @@
 <html>
 <head>
 <style>
+
+
+
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&display=swap');
+
+
 body {
     background-color: lightblue;
+    color: #FFFFFF;
+        font-family: 'Black Han Sans', sans-serif;
+    
 }
-
 h1 {
     color: white;
-    text-align: center;
+        font-family: 'Black Han Sans', sans-serif;
+    
 }
+
 
 p {
     font-family: verdana;
@@ -56,6 +68,31 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: #45a049;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: black;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(odd){background-color: #ffffff;}
+
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #FF5C77;
+  color: white;
 }
 </style>
 <meta charset="UTF-8">
@@ -119,222 +156,421 @@ catch(NullPointerException e)
     String sql = ""; // an SQL statement
     
     %>
-고객 작성글 관리 및 조회
+    
+
+
+ 
+ 
+
+
+<h1>고객 작성글 관리 및 조회</h1>
 <br />1. 가장 많이 글쓰기한 사용자 및 가장 적게 글쓰기한 사용자 검색
+
+<div class="customer-sc">
+
+	<form action="post.jsp" method="post" accept-charset="utf-8">
+                <div class="input-box">
+                </div>
+		<input type="hidden" name="formIdentifier" value="1max_form">
+		<input type="submit" value="가장 많이 글쓰기한 사용자 조회">
+	</form>
+	</div>
 <br />
-가장 많이 글 쓴 사용자
+<div class="customer-sc">
+
+	<form action="post.jsp" method="post" accept-charset="utf-8">
+                <div class="input-box">
+                </div>
+		<input type="hidden" name="formIdentifier" value="1min_form">
+		<input type="submit" value="가장 적게 글쓰기한 사용자 조회">
+	</form>
+	</div>
+<br />
+
 <br />
 <%
-String SQLF = "SELECT C.NAME AS CUSTOMER_NAME, U.AUTHOR_ID, COUNT(U.POST_ID) AS POST_COUNT FROM CUSTOMER_INFO C JOIN USER_POST_INFO U ON C.ID = U.AUTHOR_ID GROUP BY C.NAME, U.AUTHOR_ID HAVING COUNT(U.POST_ID) = (SELECT MAX(POST_COUNT) FROM (SELECT AUTHOR_ID, COUNT(POST_ID) AS POST_COUNT FROM USER_POST_INFO GROUP BY AUTHOR_ID))";
-try {
-stmt = conn.createStatement();
-rs = stmt.executeQuery(SQLF);
-ResultSetMetaData rsmd = rs.getMetaData();
-out.println("<table border=\"1\">");
-int cnt = rsmd.getColumnCount();
-for (int i=1;i<=cnt;i++)
-{
-	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
-}
-while (rs.next()) {
-    String CNAME = rs.getString(1);
-    String AID = rs.getString(2);
-    int PCNT = rs.getInt(3);
 
-	out.println("<tr>");
-    out.println("<td>"+CNAME+"</td>");
-    out.println("<td>"+AID+"</td>");
-    out.println("<td>"+PCNT+"</td>");
-    out.println("</tr>");
-    
+if (request.getMethod().equalsIgnoreCase("post")) {
+    String formIdentifier = request.getParameter("formIdentifier");
+
+    // 폼 식별자에 따라 다른 처리
+    if (formIdentifier != null) {
+        if (formIdentifier.equals("1max_form")) {
+        	String SQLF = "SELECT C.NAME AS CUSTOMER_NAME, U.AUTHOR_ID, COUNT(U.POST_ID) AS POST_COUNT FROM CUSTOMER_INFO C JOIN USER_POST_INFO U ON C.ID = U.AUTHOR_ID GROUP BY C.NAME, U.AUTHOR_ID HAVING COUNT(U.POST_ID) = (SELECT MAX(POST_COUNT) FROM (SELECT AUTHOR_ID, COUNT(POST_ID) AS POST_COUNT FROM USER_POST_INFO GROUP BY AUTHOR_ID))";
+        	try {
+        	stmt = conn.createStatement();
+        	rs = stmt.executeQuery(SQLF);
+        	ResultSetMetaData rsmd = rs.getMetaData();
+        	out.println("가장 많이 글 쓴 사용자<br />");
+        	out.println("<table border=\"1\">");
+        	int cnt = rsmd.getColumnCount();
+        	for (int i=1;i<=cnt;i++)
+        	{
+        		out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+        	}
+        	while (rs.next()) {
+        	    String CNAME = rs.getString(1);
+        	    String AID = rs.getString(2);
+        	    int PCNT = rs.getInt(3);
+
+        		out.println("<tr>");
+        	    out.println("<td>"+CNAME+"</td>");
+        	    out.println("<td>"+AID+"</td>");
+        	    out.println("<td>"+PCNT+"</td>");
+        	    out.println("</tr>");
+        	    
+        	}
+        	out.println("</table>");
+        	} catch (SQLException e) {
+        	out.println("Error: " + e.getMessage());
+        	}
+
+            
+        	
+        	
+        
+        }
+    }
 }
-out.println("</table>");
-} catch (SQLException e) {
-out.println("Error: " + e.getMessage());
-}
+
 
 %>
-<br />
-가장 적게 글 쓴 사용자
-<%
-String SQLFM = "SELECT C.NAME AS CUSTOMER_NAME, U.AUTHOR_ID, COUNT(U.POST_ID) AS POST_COUNT FROM CUSTOMER_INFO C JOIN USER_POST_INFO U ON C.ID = U.AUTHOR_ID GROUP BY C.NAME, U.AUTHOR_ID HAVING COUNT(U.POST_ID) = (SELECT MIN(POST_COUNT) FROM (SELECT AUTHOR_ID, COUNT(POST_ID) AS POST_COUNT FROM USER_POST_INFO GROUP BY AUTHOR_ID))";
-try {
-stmt = conn.createStatement();
-rs = stmt.executeQuery(SQLFM);
-ResultSetMetaData rsmd = rs.getMetaData();
-out.println("<table border=\"1\">");
-int cnt = rsmd.getColumnCount();
-for (int i=1;i<=cnt;i++)
-{
-	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
-}
-while (rs.next()) {
-    String CNAME = rs.getString(1);
-    String AID = rs.getString(2);
-    int PCNT = rs.getInt(3);
 
-	out.println("<tr>");
-    out.println("<td>"+CNAME+"</td>");
-    out.println("<td>"+AID+"</td>");
-    out.println("<td>"+PCNT+"</td>");
-    out.println("</tr>");
-    
+
+
+<br />
+
+<%
+
+if (request.getMethod().equalsIgnoreCase("post")) {
+    String formIdentifier = request.getParameter("formIdentifier");
+
+    // 폼 식별자에 따라 다른 처리
+    if (formIdentifier != null) {
+        if (formIdentifier.equals("1min_form")) {
+        	String SQLFM = "SELECT C.NAME AS CUSTOMER_NAME, U.AUTHOR_ID, COUNT(U.POST_ID) AS POST_COUNT FROM CUSTOMER_INFO C JOIN USER_POST_INFO U ON C.ID = U.AUTHOR_ID GROUP BY C.NAME, U.AUTHOR_ID HAVING COUNT(U.POST_ID) = (SELECT MIN(POST_COUNT) FROM (SELECT AUTHOR_ID, COUNT(POST_ID) AS POST_COUNT FROM USER_POST_INFO GROUP BY AUTHOR_ID))";
+        	try {
+        	stmt = conn.createStatement();
+        	rs = stmt.executeQuery(SQLFM);
+        	ResultSetMetaData rsmd = rs.getMetaData();
+        	out.println("가장 적게 글 쓴 사용자<br />");
+        	out.println("<table border=\"1\">");
+        	int cnt = rsmd.getColumnCount();
+        	for (int i=1;i<=cnt;i++)
+        	{
+        		out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+        	}
+        	while (rs.next()) {
+        	    String CNAME = rs.getString(1);
+        	    String AID = rs.getString(2);
+        	    int PCNT = rs.getInt(3);
+
+        		out.println("<tr>");
+        	    out.println("<td>"+CNAME+"</td>");
+        	    out.println("<td>"+AID+"</td>");
+        	    out.println("<td>"+PCNT+"</td>");
+        	    out.println("</tr>");
+        	    
+        	}
+        	out.println("</table>");
+        	} catch (SQLException e) {
+        	out.println("Error: " + e.getMessage());
+        	}
+        	conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+            
+        	
+        	
+        
+        }
+    }
 }
-out.println("</table>");
-} catch (SQLException e) {
-out.println("Error: " + e.getMessage());
-}
-conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+
+%>
+<%
 
 
 %>
 <br />2. 가장 먼저 글쓰기한 사용자 및 가장 최근에 글쓰기한 사용자 검색
+<div class="customer-sc">
+
+	<form action="post.jsp" method="post" accept-charset="utf-8">
+                <div class="input-box">
+                </div>
+		<input type="hidden" name="formIdentifier" value="2min_form">
+		<input type="submit" value="가장 먼저 글쓰기한 사용자 조회">
+	</form>
+	</div>
+
 <br />
-가장 먼저 글쓰기한 사용자
+<div class="customer-sc">
+
+	<form action="post.jsp" method="post" accept-charset="utf-8">
+                <div class="input-box">
+                </div>
+		<input type="hidden" name="formIdentifier" value="2max_form">
+		<input type="submit" value="가장 나중에 글쓰기한 사용자 조회">
+	</form>
+	</div>
+
+<br />
 <%
-String SQLT="SELECT NAME, GENDER, EMAIL, ID FROM CUSTOMER_INFO WHERE ID IN (SELECT AUTHOR_ID FROM USER_POST_INFO WHERE START_DATE = (SELECT MIN(START_DATE) FROM USER_POST_INFO)) ORDER BY NAME ASC, ID ASC, GENDER DESC";
-try {
-stmt = conn.createStatement();
-rs = stmt.executeQuery(SQLT);
-ResultSetMetaData rsmd = rs.getMetaData();
-out.println("<table border=\"1\">");
-int cnt = rsmd.getColumnCount();
-for (int i=1;i<=cnt;i++)
-{
-	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
-}
-while (rs.next()) {
-    String CNAME = rs.getString(1);
-    String Gender = rs.getString(2);
-    String Email = rs.getString(3);
-    String EID = rs.getString(4);
 
-	out.println("<tr>");
-    out.println("<td>"+CNAME+"</td>");
-    out.println("<td>"+Gender+"</td>");
-    out.println("<td>"+Email+"</td>");
-    out.println("<td>"+EID+"</td>");
+if (request.getMethod().equalsIgnoreCase("post")) {
+    String formIdentifier = request.getParameter("formIdentifier");
 
-    out.println("</tr>");
-    
+    // 폼 식별자에 따라 다른 처리
+    if (formIdentifier != null) {
+        if (formIdentifier.equals("2min_form")) {
+        	String SQLT="SELECT NAME, GENDER, EMAIL, ID FROM CUSTOMER_INFO WHERE ID IN (SELECT AUTHOR_ID FROM USER_POST_INFO WHERE START_DATE = (SELECT MIN(START_DATE) FROM USER_POST_INFO)) ORDER BY NAME ASC, ID ASC, GENDER DESC";
+        	try {
+        	stmt = conn.createStatement();
+        	rs = stmt.executeQuery(SQLT);
+        	ResultSetMetaData rsmd = rs.getMetaData();
+        	out.println("가장 먼저 글쓰기한 사용자<br />");
+        	out.println("<table border=\"1\">");
+        	int cnt = rsmd.getColumnCount();
+        	for (int i=1;i<=cnt;i++)
+        	{
+        		out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+        	}
+        	while (rs.next()) {
+        	    String CNAME = rs.getString(1);
+        	    String Gender = rs.getString(2);
+        	    String Email = rs.getString(3);
+        	    String EID = rs.getString(4);
+
+        		out.println("<tr>");
+        	    out.println("<td>"+CNAME+"</td>");
+        	    out.println("<td>"+Gender+"</td>");
+        	    out.println("<td>"+Email+"</td>");
+        	    out.println("<td>"+EID+"</td>");
+
+        	    out.println("</tr>");
+        	    
+        	}
+        	out.println("</table>");
+        	} catch (SQLException e) {
+        	out.println("Error: " + e.getMessage());
+        	}
+
+            
+        	
+        	
+        
+        }
+    }
 }
-out.println("</table>");
-} catch (SQLException e) {
-out.println("Error: " + e.getMessage());
-}
+
+
+%>
+
+
+
+<%
 
 %>
 <br />
-가장 나중에 글쓰기한 사용자
+
 <br />
 <%
-String SQLTMIN="SELECT NAME, GENDER, EMAIL, ID FROM CUSTOMER_INFO WHERE ID IN (SELECT AUTHOR_ID FROM USER_POST_INFO WHERE START_DATE = (SELECT MAX(START_DATE) FROM USER_POST_INFO)) ORDER BY NAME ASC, ID ASC, GENDER DESC";
-try {
-stmt = conn.createStatement();
-rs = stmt.executeQuery(SQLTMIN);
-ResultSetMetaData rsmd = rs.getMetaData();
-out.println("<table border=\"1\">");
-int cnt = rsmd.getColumnCount();
-for (int i=1;i<=cnt;i++)
-{
-	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
-}
-while (rs.next()) {
-    String CNAME = rs.getString(1);
-    String Gender = rs.getString(2);
-    String Email = rs.getString(3);
-    String EID = rs.getString(4);
 
-	out.println("<tr>");
-    out.println("<td>"+CNAME+"</td>");
-    out.println("<td>"+Gender+"</td>");
-    out.println("<td>"+Email+"</td>");
-    out.println("<td>"+EID+"</td>");
+%>
 
-    out.println("</tr>");
-    
+
+<%
+
+if (request.getMethod().equalsIgnoreCase("post")) {
+    String formIdentifier = request.getParameter("formIdentifier");
+
+    // 폼 식별자에 따라 다른 처리
+    if (formIdentifier != null) {
+        if (formIdentifier.equals("2max_form")) {
+        	String SQLTMIN="SELECT NAME, GENDER, EMAIL, ID FROM CUSTOMER_INFO WHERE ID IN (SELECT AUTHOR_ID FROM USER_POST_INFO WHERE START_DATE = (SELECT MAX(START_DATE) FROM USER_POST_INFO)) ORDER BY NAME ASC, ID ASC, GENDER DESC";
+        	try {
+        	stmt = conn.createStatement();
+        	rs = stmt.executeQuery(SQLTMIN);
+        	ResultSetMetaData rsmd = rs.getMetaData();
+        	out.println("가장 나중에 글쓰기한 사용자<br />");
+        	out.println("<table border=\"1\">");
+        	int cnt = rsmd.getColumnCount();
+        	for (int i=1;i<=cnt;i++)
+        	{
+        		out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+        	}
+        	while (rs.next()) {
+        	    String CNAME = rs.getString(1);
+        	    String Gender = rs.getString(2);
+        	    String Email = rs.getString(3);
+        	    String EID = rs.getString(4);
+
+        		out.println("<tr>");
+        	    out.println("<td>"+CNAME+"</td>");
+        	    out.println("<td>"+Gender+"</td>");
+        	    out.println("<td>"+Email+"</td>");
+        	    out.println("<td>"+EID+"</td>");
+
+        	    out.println("</tr>");
+        	    
+        	}
+        	out.println("</table>");
+        	} catch (SQLException e) {
+        	out.println("Error: " + e.getMessage());
+        	}
+
+            
+        	
+        	
+        
+        }
+    }
 }
-out.println("</table>");
-} catch (SQLException e) {
-out.println("Error: " + e.getMessage());
-}
+
 
 %>
 
 
 
 
+<br />3. 사용자 정보가 있는 글 중 가장 먼저 수정된 글 및 가장 최근에 수정된 공고의 상태, ID및 수정일자 검색
+<br />
+<div class="customer-sc">
 
-<br />사용자 정보가 있는 글 중 가장 먼저 수정된 글 및 가장 최근에 수정된 공고의 상태, ID및 수정일자 검색
+	<form action="post.jsp" method="post" accept-charset="utf-8">
+                <div class="input-box">
+                </div>
+		<input type="hidden" name="formIdentifier" value="3min_form">
+		<input type="submit" value="가장 먼저 수정된 글 조회">
+	</form>
+	</div>
+
+<br />
+<div class="customer-sc">
+
+	<form action="post.jsp" method="post" accept-charset="utf-8">
+                <div class="input-box">
+                </div>
+		<input type="hidden" name="formIdentifier" value="3max_form">
+		<input type="submit" value="가장 최근에 수정된 글 조회">
+	</form>
+	</div>
+
 <br />
 
-공고 상태별 가장 먼저 수정된 글 검색
-<br />
 <%
-String SQLK="SELECT STATUS, POST_ID, LASTLY_UPDATED FROM (SELECT U.STATUS, P.POST_ID, P.LASTLY_UPDATED, ROW_NUMBER() OVER(PARTITION BY U.STATUS ORDER BY P.LASTLY_UPDATED ASC) AS RN FROM USER_POST_INFO U JOIN POST_INFO P ON U.POST_ID = P.POST_ID) WHERE RN = 1";
 
-try {
-stmt = conn.createStatement();
-rs = stmt.executeQuery(SQLK);
-ResultSetMetaData rsmd = rs.getMetaData();
-out.println("<table border=\"1\">");
-int cnt = rsmd.getColumnCount();
-for (int i=1;i<=cnt;i++)
-{
-	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
-}
-while (rs.next()) {
-    String Status = rs.getString(1);
-    String Post_ID = rs.getString(2);
-    String LUP = rs.getString(3);
+if (request.getMethod().equalsIgnoreCase("post")) {
+    String formIdentifier = request.getParameter("formIdentifier");
 
-	out.println("<tr>");
-    out.println("<td>"+Status+"</td>");
-    out.println("<td>"+Post_ID+"</td>");
-    out.println("<td>"+LUP+"</td>");
+    // 폼 식별자에 따라 다른 처리
+    if (formIdentifier != null) {
+        if (formIdentifier.equals("3min_form")) {
+        	
+        	String SQLK="SELECT STATUS, POST_ID, LASTLY_UPDATED FROM (SELECT U.STATUS, P.POST_ID, P.LASTLY_UPDATED, ROW_NUMBER() OVER(PARTITION BY U.STATUS ORDER BY P.LASTLY_UPDATED ASC) AS RN FROM USER_POST_INFO U JOIN POST_INFO P ON U.POST_ID = P.POST_ID) WHERE RN = 1";
 
-    out.println("</tr>");
-    
+        	try {
+        	stmt = conn.createStatement();
+        	rs = stmt.executeQuery(SQLK);
+        	ResultSetMetaData rsmd = rs.getMetaData();
+        	out.println("공고 상태별 가장 먼저 수정된 글 검색<br />");
+        	out.println("<table border=\"1\">");
+        	int cnt = rsmd.getColumnCount();
+        	for (int i=1;i<=cnt;i++)
+        	{
+        		out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+        	}
+        	while (rs.next()) {
+        	    String Status = rs.getString(1);
+        	    String Post_ID = rs.getString(2);
+        	    String LUP = rs.getString(3);
+
+        		out.println("<tr>");
+        	    out.println("<td>"+Status+"</td>");
+        	    out.println("<td>"+Post_ID+"</td>");
+        	    out.println("<td>"+LUP+"</td>");
+
+        	    out.println("</tr>");
+        	    
+        	}
+        	out.println("</table>");
+        	} catch (SQLException e) {
+        	out.println("Error: " + e.getMessage());
+        	}
+
+            
+        	
+        	
+        
+        }
+    }
 }
-out.println("</table>");
-} catch (SQLException e) {
-out.println("Error: " + e.getMessage());
-}
+
 
 %>
-<br />
-공고 상태별 가장 최근에 수정된 글 검색 
+
 <br />
 <%
-String SQLKMAX="SELECT STATUS, POST_ID, LASTLY_UPDATED FROM (SELECT U.STATUS, P.POST_ID, P.LASTLY_UPDATED, ROW_NUMBER() OVER(PARTITION BY U.STATUS ORDER BY P.LASTLY_UPDATED DESC) AS RN FROM USER_POST_INFO U JOIN POST_INFO P ON U.POST_ID = P.POST_ID) WHERE RN = 1";
 
-try {
-stmt = conn.createStatement();
-rs = stmt.executeQuery(SQLKMAX);
-ResultSetMetaData rsmd = rs.getMetaData();
-out.println("<table border=\"1\">");
-int cnt = rsmd.getColumnCount();
-for (int i=1;i<=cnt;i++)
-{
-	out.println("<th>"+rsmd.getColumnName(i)+"</th>");
-}
-while (rs.next()) {
-    String Status = rs.getString(1);
-    String Post_ID = rs.getString(2);
-    String LUP = rs.getString(3);
+%>
+<%
 
-	out.println("<tr>");
-    out.println("<td>"+Status+"</td>");
-    out.println("<td>"+Post_ID+"</td>");
-    out.println("<td>"+LUP+"</td>");
+if (request.getMethod().equalsIgnoreCase("post")) {
+    String formIdentifier = request.getParameter("formIdentifier");
 
-    out.println("</tr>");
-    
+    // 폼 식별자에 따라 다른 처리
+    if (formIdentifier != null) {
+        if (formIdentifier.equals("3max_form")) {
+        	
+        	String SQLKMAX="SELECT STATUS, POST_ID, LASTLY_UPDATED FROM (SELECT U.STATUS, P.POST_ID, P.LASTLY_UPDATED, ROW_NUMBER() OVER(PARTITION BY U.STATUS ORDER BY P.LASTLY_UPDATED DESC) AS RN FROM USER_POST_INFO U JOIN POST_INFO P ON U.POST_ID = P.POST_ID) WHERE RN = 1";
+
+        	try {
+        	stmt = conn.createStatement();
+        	rs = stmt.executeQuery(SQLKMAX);
+        	ResultSetMetaData rsmd = rs.getMetaData();
+        	out.println("공고 상태별 가장 최근에 수정된 글 검색 <br />");
+        	out.println("<table border=\"1\">");
+        	int cnt = rsmd.getColumnCount();
+        	for (int i=1;i<=cnt;i++)
+        	{
+        		out.println("<th>"+rsmd.getColumnName(i)+"</th>");
+        	}
+        	while (rs.next()) {
+        	    String Status = rs.getString(1);
+        	    String Post_ID = rs.getString(2);
+        	    String LUP = rs.getString(3);
+
+        		out.println("<tr>");
+        	    out.println("<td>"+Status+"</td>");
+        	    out.println("<td>"+Post_ID+"</td>");
+        	    out.println("<td>"+LUP+"</td>");
+
+        	    out.println("</tr>");
+        	    
+        	}
+        	out.println("</table>");
+        	} catch (SQLException e) {
+        	out.println("Error: " + e.getMessage());
+        	}
+
+            
+        	
+        	
+        
+        }
+    }
 }
-out.println("</table>");
-} catch (SQLException e) {
-out.println("Error: " + e.getMessage());
-}
+
+
+%>
+
+
+<br />
+
+
+<br />
+<%
+
 
 %>
 
