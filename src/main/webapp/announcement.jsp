@@ -57,6 +57,30 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #45a049;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(odd){background-color: #ffffff;}
+
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #FF5C77;
+  color: white;
+}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>

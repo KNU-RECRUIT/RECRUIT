@@ -201,7 +201,8 @@ if (request.getMethod().equalsIgnoreCase("post")) {
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery(C_SQL);
 				
-                
+                out.println("<br />");
+                out.println("<br />");
                 if (!rs.next()) {
                     out.println("고객 정보가 없습니다.");
                 }
