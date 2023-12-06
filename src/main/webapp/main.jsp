@@ -17,6 +17,7 @@ body {
     background-color: lightblue;
     font-family: 'Nanum Myeongjo', serif;
     text-align: center;
+    color: #FFFFFF;
 }
 h1 {
     color: white;
@@ -112,6 +113,19 @@ color: #FFFFFF;
   font-size: 12px;
 }
 
+input[type=submit] {
+    
+    width: 70%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -166,12 +180,13 @@ color: #FFFFFF;
         
         <input type="text" id="name" name="name"><br><br>
         </div>
-        <input type="submit" value="로그인">
+        <input type="submit" class="big-button" value="로그인">
     </form>
 
 </div>
 
-
+<br />
+<br />
 <%
 	String strSID = "";
     String OS = System.getProperty("os.name").toLowerCase();
