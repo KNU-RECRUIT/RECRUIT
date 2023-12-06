@@ -9,14 +9,29 @@
 <html>
 <head>
 <style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&display=swap');
+
+
 body {
+    background-color: lightblue;
+    font-family: 'Black Han Sans', sans-serif;
+    text-align: center;
+    color: #FFFFFF;
+}
+h1 {
+    color: white;
+    text-align: center;
+    
+}
+/* body {
     background-color: lightblue;
 }
 
 h1 {
     color: white;
     text-align: center;
-}
+} */
 
 p {
     font-family: verdana;
@@ -61,6 +76,7 @@ input[type=submit]:hover {
 table {
   border-collapse: collapse;
   width: 100%;
+  color: black;
 }
 
 table td, table th {
@@ -81,6 +97,48 @@ table th {
   background-color: #FF5C77;
   color: white;
 }
+
+.customer-sc .input-box {
+  position: relative;
+  width: 60%;
+  left: 20%;
+}
+
+.customer-sc .input-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+.customer-sc .input-box label {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.customer-sc .input-box input:focus ~ label,
+.customer-sc .input-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+
+::placeholder {
+	color: #ffffff
+}
+
+
 </style>
 <meta charset="UTF-8">
 <title>RECRUIT: KNU</title>
@@ -148,25 +206,40 @@ catch(NullPointerException e)
 
 	직원의 ID로 해당 직원이 쓴 글 검색
 	<br />
+	<div class="customer-sc">
+	
 	<form action="idsearch.jsp" method="post" accept-charset="utf-8">
-        <label for="mid">직원의 	ID</label>
-        <input type="text" id="mid" name="mid"><br><br>
+                <div class="input-box">
+        
+        <input type="text" id="mid" name="mid" placeholder="직원의 ID 입력"><br><br>
+        </div>
         <input type="submit" value="검색하기">
     </form>
+    </div>
     <br />
     공지를 관리할 수 있는 부서 관리자급 직원 검색
     이름으로 검색
+    	<div class="customer-sc">
+    
     <form action="namesearch.jsp" method="post" accept-charset="utf-8">
-        <label for="mdep">이름</label>
-        <input type="text" id="mname" name="mname"><br><br>
+                        <div class="input-box">
+        
+        <input type="text" id="mname" name="mname" placeholder="이름 입력"><br><br>
+        </div>
         <input type="submit" value="검색하기">
     </form>
+    </div>
     직원 부서로 검색
+    	<div class="customer-sc">
+    
     <form action="depsearch.jsp" method="post" accept-charset="utf-8">
-        <label for="mdep">부서</label>
-        <input type="text" id="mdep" name="mdep"><br><br>
+                        <div class="input-box">
+        
+        <input type="text" id="mdep" name="mdep" placeholder="부서 코드 입력"><br><br>
+        </div>
         <input type="submit" value="검색하기">
     </form>
+    </div>
   	전체 검색 결과
   	<br />
   	<%
@@ -203,16 +276,25 @@ out.println("Error: " + e.getMessage());
   	
 <br />
 내가 쓴 글 삭제
+
 <br />
+    	<div class="customer-sc">
+
 	<form action="announcement.jsp" method="post" accept-charset="utf-8">
         <label for="pd_id">삭제하려는 글의 ID 입력</label>
-        <input type="text" id="pd_id" name="pd_id"><br><br>
-        <label for="my_id">삭제 확인을 위해 나의 ID 입력 </label>
-        <input type="text" id="my_id" name="my_id"><br><br>
+                                <div class="input-box">
         
+        <input type="text" id="pd_id" name="pd_id"><br><br>
+        </div>
+        <label for="my_id">삭제 확인을 위해 나의 ID 입력 </label>
+                                <div class="input-box">
+        
+        <input type="text" id="my_id" name="my_id"><br><br>
+        </div>
         <input type="submit" value="삭제하기">
         <input type="hidden" name="customer_form_ident" value="post_delete_form">
     </form>
+    </div>
        
 <%
 if (request.getMethod().equalsIgnoreCase("post")) {

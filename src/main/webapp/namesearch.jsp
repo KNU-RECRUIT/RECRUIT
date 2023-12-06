@@ -11,6 +11,32 @@
 <head>
 <meta charset="UTF-8">
 <title>RECRUIT: KNU</title>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: black;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(odd){background-color: #ffffff;}
+
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #FF5C77;
+  color: white;
+}
+</style>
 </head>
 <body>
 <%
