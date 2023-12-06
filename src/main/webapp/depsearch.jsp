@@ -25,6 +25,7 @@
     } else {
         out.println("OS 정보가 올바르지 않거나 인식되지 않습니다. UNIX/Linux/macOS/Windows외의 OS 사용 시 본 사이트와 호환되지 않을 수 있습니다.<br />");
     }
+    
 
 %>
 <%
@@ -62,6 +63,9 @@ catch(NullPointerException e)
 		out.println("연결 실패");
 		out.println("네트워크 연결 상태 또는 Driver 상태를 점검하여 주십시오. ");
 	}
+	
+    conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
     Statement stmt = null;	// Statement object
     ResultSet rs = null;    // Resultset object
     String departmentId = null;

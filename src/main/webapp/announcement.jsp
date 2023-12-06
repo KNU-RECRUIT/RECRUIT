@@ -135,6 +135,8 @@ catch(NullPointerException e)
 		out.println("연결 실패");
 		out.println("네트워크 연결 상태 또는 Driver 상태를 점검하여 주십시오. ");
 	}
+    conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
     Statement stmt = null;	// Statement object
     ResultSet rs = null;    // Resultset object
     String departmentId = null;

@@ -62,6 +62,7 @@ catch(NullPointerException e)
 		out.println("연결 실패");
 		out.println("네트워크 연결 상태 또는 Driver 상태를 점검하여 주십시오. ");
 	}
+	
     Statement stmt = null;	// Statement object
     ResultSet rs = null;    // Resultset object
     String departmentId = null;
@@ -70,6 +71,8 @@ catch(NullPointerException e)
     
     %>
 	     <%
+         conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
 	     String FName = request.getParameter("fname");
 	     String LName = request.getParameter("lname");
 	     String name = FName+LName;
@@ -101,8 +104,7 @@ catch(NullPointerException e)
 	    	out.println("location.href='customer.jsp';");
 	    	out.println("</script>");
 	        } catch (SQLException e) {
-	        	out.println(sqlcsi);
-	            out.println("고객 정보 삽입에 실패했습니다.");
+	            out.println("<script>alert('고객 정보 삽입에 실패했습니다. 동일한 ID가 있는 경우 또는 ID가 10자리 미만인지 확인해 주시기 바랍니다.'); location.href='customer.jsp';</script>");
 	            System.out.println(e);
 	        }
 

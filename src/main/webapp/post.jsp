@@ -184,6 +184,8 @@ out.println("</table>");
 } catch (SQLException e) {
 out.println("Error: " + e.getMessage());
 }
+conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
 
 %>
 <br />2. 가장 먼저 글쓰기한 사용자 및 가장 최근에 글쓰기한 사용자 검색

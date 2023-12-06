@@ -233,6 +233,8 @@ h1 {
     }
     else
     {
+        conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
     String id = request.getParameter("id");
     String name = request.getParameter("name");
     try {

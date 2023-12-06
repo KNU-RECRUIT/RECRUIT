@@ -63,6 +63,7 @@ input[type=submit] {
 table {
   border-collapse: collapse;
   width: 100%;
+  color: black;
 }
 
 table td, table th {
@@ -155,7 +156,7 @@ table th {
         </div>
                 <div class="input-box">
         
-        <input type="text" id="id" name="id" placeholder="ID"><br><br>
+        <input type="text" id="id" name="id" placeholder="ID(10자리 이상 입력해 주세요)"><br><br>
         </div>
                 <div class="input-box">
         
@@ -170,7 +171,7 @@ table th {
         <input type="text" id="birth" name="birth" placeholder="생년월일(YYYY-MM-DD로 입력하여 주세요)"><br><br>
         </div>
         
-        <input type="submit" value="Submit">
+        <input type="submit" value="회원가입(고객 추가)">
         
     </form>
     </div>
@@ -179,12 +180,16 @@ table th {
 고객 정보 검색 (ID로 검색하기)
 </h1>
 <br />
+<div class="customer-sc">
 	<form action="customer.jsp" method="post" accept-charset="utf-8">
-        <label for="c_id">ID: </label>
-        <input type="text" id=c_id" name="c_id"><br><br>
+        <div class="input-box">
+        <input type="text" id=c_id" name="c_id" placeholder="ID"><br><br>
+        		</div>
+        
 		<input type="hidden" name="formIdentifier" value="s_form">
-		<input type="submit" value="Submit">
+		<input type="submit" value="검색">
 	</form>
+	</div>
 	
 	
 <%
@@ -245,6 +250,8 @@ table th {
 		out.println("연결 실패");
 		out.println("네트워크 연결 상태 또는 Driver 상태를 점검하여 주십시오. ");
 	}
+    conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
     Statement stmt = null;	// Statement object
     ResultSet rs = null;    // Resultset object
     String departmentId = null;
@@ -326,13 +333,22 @@ if (request.getMethod().equalsIgnoreCase("post")) {
 고객 정보 삭제 (ID로 삭제하기)
 </h1><br />
 <br />
+<div class="customer-sc">
+
 	<form action="customer.jsp" method="post" accept-charset="utf-8">
-        <label for="del_id">ID: </label>
-        <input type="text" id="del_id" name="del_id"><br><br>
+                <div class="input-box">
+        
+        <input type="text" id="del_id" name="del_id" placeholder="ID"><br><br>
+        </div>
 		<input type="hidden" name="formIdentifier" value="d_form">
-		<input type="submit" value="Submit">
+		<input type="submit" value="삭제하기">
 	</form>
+	</div>
 <br />
+
+
+	
+
 <%
 
 if (request.getMethod().equalsIgnoreCase("post")) {
