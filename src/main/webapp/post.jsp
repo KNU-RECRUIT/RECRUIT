@@ -59,7 +59,7 @@ input[type=submit]:hover {
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RECRUIT: KNU</title>
 </head>
 <body>
 <%

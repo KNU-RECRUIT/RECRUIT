@@ -171,7 +171,7 @@ h1 {
 
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RECRUIT: KNU</title>
 </head>
 <body>
 
