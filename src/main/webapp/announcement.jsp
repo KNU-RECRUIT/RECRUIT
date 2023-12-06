@@ -125,7 +125,7 @@ catch(NullPointerException e)
 	<form action="idsearch.jsp" method="post" accept-charset="utf-8">
         <label for="mid">직원의 	ID</label>
         <input type="text" id="mid" name="mid"><br><br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="검색하기">
     </form>
     <br />
     공지를 관리할 수 있는 부서 관리자급 직원 검색
@@ -133,13 +133,13 @@ catch(NullPointerException e)
     <form action="namesearch.jsp" method="post" accept-charset="utf-8">
         <label for="mdep">이름</label>
         <input type="text" id="mname" name="mname"><br><br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="검색하기">
     </form>
     직원 부서로 검색
     <form action="depsearch.jsp" method="post" accept-charset="utf-8">
         <label for="mdep">부서</label>
         <input type="text" id="mdep" name="mdep"><br><br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="검색하기">
     </form>
   	전체 검색 결과
   	<br />
@@ -184,7 +184,7 @@ out.println("Error: " + e.getMessage());
         <label for="my_id">삭제 확인을 위해 나의 ID 입력 </label>
         <input type="text" id="my_id" name="my_id"><br><br>
         
-        <input type="submit" value="Submit">
+        <input type="submit" value="삭제하기">
         <input type="hidden" name="customer_form_ident" value="post_delete_form">
     </form>
        

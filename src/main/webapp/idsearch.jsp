@@ -10,8 +10,41 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+body {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
 </head>
 <body>
+<h1>조회 결과</h1>
 <%
 	String strSID = "";
     String OS = System.getProperty("os.name").toLowerCase();
