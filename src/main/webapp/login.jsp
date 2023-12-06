@@ -8,6 +8,166 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+
+body {
+    background-color: lightblue;
+    text-align: center;
+}
+h1 {
+    color: white;
+    text-align: center;
+}
+p {
+    font-family: verdana;
+    font-size: 20px;
+}
+
+a {
+    font-family: verdana;
+    font-size: 20px;
+}
+
+
+span {
+font-family: 'Nanum Myeongjo', serif;
+}
+
+:root {
+/*   --backgroundColor: rgba(246, 241, 209);
+ */  --colorShadeA: rgb(106, 163, 137);
+  --colorShadeB: rgb(121, 186, 156);
+  --colorShadeC: rgb(150, 232, 195);
+  --colorShadeD: rgb(187, 232, 211);
+  --colorShadeE: rgb(205, 255, 232);
+}
+
+* {
+  box-sizing: border-box;
+}
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  font-family: "OpenSans", sans-serif;
+  font-size: 1rem;
+  line-height: 2;
+/*    display: flex;
+    */align-items: center;
+   justify-content: center; 
+  margin: 0;
+  min-height: 100vh;
+  background: var(--backgroundColor);
+}
+button {
+   position: relative;
+   display: inline-block;
+  cursor: pointer;
+  outline: none;
+  margin: auto;
+/*   margin-left: 35%;
+ */  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: var(--colorShadeA);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: inherit;
+  width: 30%;
+}
+
+button.big-button {
+  padding: 1em 2em;
+  border: 2px solid var(--colorShadeA);
+  border-radius: 1em;
+  background: var(--colorShadeE);
+  transform-style: preserve-3d;
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+}
+button.big-button::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--colorShadeC);
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.75em 0 0 var(--colorShadeA);
+  transform: translate3d(0, 0.75em, -1em);
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+}
+
+button.big-button:hover {
+  background: var(--colorShadeD);
+  transform: translate(0, 0.375em);
+}
+
+button.big-button:hover::before {
+  transform: translate3d(0, 0.75em, -1em);
+}
+
+button.big-button:active {
+  transform: translate(0em, 0.75em);
+}
+
+button.big-button:active::before {
+  transform: translate3d(0, 0, -1em);
+
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
+}
+
+
+h1 {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  color: #080808;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+
+.one h1 {
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+}
+.one h1:before {
+  width: 28px;
+  height: 5px;
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  margin-left: -14px;
+  background-color: #b80000;
+}
+.one h1:after {
+  width: 100px;
+  height: 1px;
+  display: block;
+  content: "";
+  position: relative;
+  margin-top: 25px;
+  left: 50%;
+  margin-left: -50px;
+  background-color: #b80000;
+}
+
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -60,6 +220,8 @@
     String departmentName = null;
     String sql = ""; // an SQL statement
     
+    out.println("<div class=\"one\"><h1>RECRUIT: KNU</h1></div>");
+    
     if(conn==null)
     {
     	out.println("<script>");
@@ -84,7 +246,6 @@
         }
         else {
             departmentId = rs.getString(4);
-            out.println(name+"님 환영합니다!");
             String sessionName1 = "recruit_id";
             String sessionToken1 = id;
             String sessionName2 = "recruit_name";
@@ -104,12 +265,25 @@
             }
             else {
                 departmentName = rs.getString(1);
-                out.println("("+departmentName+" 부서)<br />");
-                out.println("어떻게 도와드릴까요?<br />");
-                out.println("<a href='customer.jsp'> 1.고객 관리<a /><br />");
+/*                 out.println("("+departmentName+" 부서)<br />");
+
+ */                
+ out.println("<span>"+name+"("+departmentName+")님 환영합니다!<br />");
+
+ out.println("어떻게 도와드릴까요?<br /></span>");
+                out.println("<br /><br /><button class='big-button' onclick=\"location.href='customer.jsp'\">고객 관리</button>");
+                out.println("<br />");
+                out.println("<br />");
+                out.println("<button class='big-button' onclick=\"location.href='announcement.jsp'\">공지글 관리</button>");
+                out.println("<br />");
+                out.println("<br />");
+                out.println("<button class='big-button' onclick=\"location.href='post.jsp'\">고객 작성글 관리</button>");
+                out.println("<br />");
+                out.println("<br />");
+                
+/*                 out.println("<a href='customer.jsp'> 1.고객 관리<a /><br />");
                 out.println("<a href='announcement.jsp'> 2.공지글 관리<a /><br />");
-                out.println("<a href='post.jsp'> 3.고객 작성글 관리<a /><br />");
-                out.println("");
+                out.println("<a href='post.jsp'> 3.고객 작성글 관리<a /><br />"); */
             }
             
         }
